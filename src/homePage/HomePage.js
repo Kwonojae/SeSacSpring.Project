@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { getMatchHistory, getUserInfo } from "../api/apiManager";
+import { Link } from "react-router-dom";
+import { getMatchHistory, getMatchHistoryDetail, getUserInfo } from "../api/apiManager";
 import styled from "styled-components";
 import { IoMdSearch } from "react-icons/io";
 
@@ -13,14 +14,21 @@ const HomePage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(getUserInfo(username));
+        // console.log(getUserInfo(username));
+        // console.log(getMatchHistory("1ADaNT2BunDYZQ4MFfehi-mkbBbckLnLCpSU2B5rfQOMc9_c9xS3liUGcfdYIGHirJtG0hgrvKzwxA"));
+        // console.log(getMatchHistoryDetail("KR_5661918273"));
     };
 
     return (
         <Container>
             <SearchBar onSubmit={handleSubmit}>
                 <Searchinput type="text" name="username" placeholder="소환사 이름" onChange={handleInput} />
+                <Link to={{
+                    pathname: `/summoner/`,
+                    search: `userName=${username}`,
+                }}>
                 <Searchbutton type="submit"><IoMdSearch size={"30px"} color="white"/></Searchbutton>
+                </Link>
             </SearchBar>
         </Container>
     )

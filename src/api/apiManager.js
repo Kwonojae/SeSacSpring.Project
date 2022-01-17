@@ -22,7 +22,7 @@ export const getUserInfo = async(summonerName ) => {
 export const getMatchHistory = async(summonerPuuid) => {
     // API 키 사용해서 JSON 데이터 불러옴
     const Info = await axios.get(
-        `https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/${summonerPuuid}/ids?start=0&count=10`
+        `https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/${summonerPuuid}/ids?start=0&count=10&api_key=${api_key}`
     );
 
     // JSON 데이터중 원하는 데이터만 추출
@@ -31,5 +31,20 @@ export const getMatchHistory = async(summonerPuuid) => {
     }
 
     // 추출한 데이터 반환
-    return Info;
+    return Info.data;
+}
+
+export const getMatchHistoryDetail = async(matchId) => {
+    // API 키 사용해서 JSON 데이터 불러옴
+    const Info = await axios.get(
+        `https://asia.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${api_key}`
+    );
+
+    // JSON 데이터중 원하는 데이터만 추출
+    const data = {
+        participants: Info.data.info.participants,
+    }
+
+    // 추출한 데이터 반환
+    return data;
 }
