@@ -24,7 +24,7 @@ const HomePage = () => {
     return (
         <Container>
             <SearchBar onSubmit={handleSubmit}>
-                <Searchinput type="text" name="username" placeholder="소환사 이름" onChange={handleInput} />
+                <Searchinput type="text" name="username" placeholder="소환사 이름" onChange={handleInput} autoComplete="off"/>
                 <Link to={{
                     pathname: `/summoner/`,
                     search: `userName=${username}`,

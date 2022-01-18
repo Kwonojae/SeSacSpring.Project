@@ -17,7 +17,7 @@ const SummonerPage = () => {
         data.then((value) => {
             setSummoner({ name: value.name, summonerLevel: value.summonerLevel, profileIconId: value.profileIconId });
         });
-    }, []);
+    });
 
     return (
         <Container>
@@ -30,7 +30,7 @@ const SummonerPage = () => {
                 </SummonerInfo>
             </HeaderBox>
             <UserMatchHistory>
-
+                {/* TODO 용운 파트 */}
             </UserMatchHistory>
         </Container>
     )
