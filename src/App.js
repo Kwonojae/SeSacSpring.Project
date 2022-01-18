@@ -5,6 +5,7 @@ import Navigator from './navigator/Navigator';
 import HomePage from './homePage/HomePage';
 import Footer from './footer/Footer';
 import SummonerPage from './homePage/SummonerPage';
+import RegisterPage from './homePage/RegisterPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" exact={true} element={<HomePage />} />
         <Route path="/summoner/" element={<SummonerPage />} />
+        <Route path="/register/" element={<RegisterPage />} />
       </Routes>
       <Footer></Footer>
     </BrowserRouter>

@@ -4,6 +4,7 @@ import { getMatchHistory, getMatchHistoryDetail, getUserInfo } from "../api/apiM
 import styled from "styled-components";
 import { IoMdSearch } from "react-icons/io";
 
+
 const HomePage = () => {
 
     const [username, setUsername] = useState("");
