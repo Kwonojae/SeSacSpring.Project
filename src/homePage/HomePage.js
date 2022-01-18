@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { getMatchHistory, getMatchHistoryDetail, getUserInfo } from "../api/apiManager";
 import styled from "styled-components";
 import { IoMdSearch } from "react-icons/io";
-
+import { getMatchData, getSummonerData } from "../utility/getData";
 
 const HomePage = () => {
 
@@ -15,9 +14,11 @@ const HomePage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // console.log(getUserInfo(username));
-        // console.log(getMatchHistory("1ADaNT2BunDYZQ4MFfehi-mkbBbckLnLCpSU2B5rfQOMc9_c9xS3liUGcfdYIGHirJtG0hgrvKzwxA"));
-        // console.log(getMatchHistoryDetail("KR_5661918273"));
+
+        // matchData 불러오기 
+        // getMatchData(username);
+        // getSummonerData(username);
+
     };
 
     return (

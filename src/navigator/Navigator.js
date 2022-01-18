@@ -6,14 +6,13 @@ import { Link } from "react-router-dom";
 const Navigator = () => {
     return (
         <Nav>
-            <Logo>
+            <Logo to="/">
                 <img src={title} alt="" width="90%"></img>
                 <h1>SeSAC.GG</h1>
             </Logo>
             <NavMenu>
-                <NavMenuLink>게시판</NavMenuLink>
-                <NavMenuLink>챔피언 정보</NavMenuLink>
-
+                <NavMenuLink to="/">게시판</NavMenuLink>
+                <NavMenuLink to="/">챔피언 정보</NavMenuLink>
                 <Login>로그인</Login>
             </NavMenu>
         </Nav>
@@ -27,30 +26,17 @@ height: 10vh;
 display: flex;
 justify-content: space-between;
 width: 100%;
-background: #31313c;
+background: #24242a;
 `
 
-const Logo = styled.div`
-margin-left: 100px;
-position: relative;
-width: 100px;
-color: #fff;
-display: flex;
-align-items: center;
-height: 100%;
-cursor: pointer;
-text-decoration: none;
-font-family: 'Do Hyeon', sans-serif;
-`
 const NavMenu = styled.div`
   display: flex;
   align-items: center;
-  @media screen and (max-width: 768px) {
+  /* @media screen and (max-width: 768px) {
     display: none;
-  }
-`;
-
-const NavMenuLink = styled.div`
+  } */
+`
+const NavLink = css`
   color: #fff;
   display: flex;
   align-items: center;
@@ -58,9 +44,20 @@ const NavMenuLink = styled.div`
   height: 100%;
   cursor: pointer;
   text-decoration: none;
-  font-size: 30px;
-  font-family: 'Do Hyeon', sans-serif;
-`;
+`
+const Logo = styled(Link)`
+${NavLink}
+margin-left: 100px;
+position: relative;
+width: 100px;
+font-family: 'Do Hyeon', sans-serif;
+`
+
+const NavMenuLink = styled(Link)`
+${NavLink}
+font-size: 30px;
+font-family: 'Do Hyeon', sans-serif;
+`
 
 const Login = styled.div`
 background: #5882FA;
