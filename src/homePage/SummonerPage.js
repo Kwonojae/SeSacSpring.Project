@@ -13,7 +13,6 @@ const SummonerPage = () => {
             <h1>{username}</h1>
         </Container>
     )
-
 }
 
 export default SummonerPage;

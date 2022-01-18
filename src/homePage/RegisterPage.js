@@ -3,25 +3,25 @@ import { useState, useEffect } from 'react';
 
 
 function RegisterPage() {
-    const [register, setRegister] = useState({userID: " ", nickName: " ", email: " ", password: " "});
+    const [register, setRegister] = useState({userId: " ", nickName: " ", email: " ", password: " "});
 
     useEffect(() => {
-        axios.get('http://localhost:8080/member/register').then((res) => {
+        axios.get('http://localhost:8080/members/register').then((res) => {
             setRegister(res.data);
         });
     }, []);
 
     const postRegister = () => {
-        axios.post('http://localhost:8080/member/register', {
+        axios.post('http://localhost:8080/members/register', {
             email: register.email,
-            userID: register.userID,
+            userId: register.userId,
             password: register.password,
             nickName: register.nickName,
           })
           .then((res) => {
             console.log('정상적으로 등록했습니다.');
           });
-      };
+    };
 
     return (
         <>
@@ -36,9 +36,9 @@ function RegisterPage() {
                 <br />
                 ID:{' '}
                 <input
-                    value={register.userID|| ''}
+                    value={register.userId|| ''}
                     onChange={(e) => {
-                        setRegister({ ...register, userID: e.target.value });
+                        setRegister({ ...register, userId: e.target.value });
                     }}
                 />
                 PW:{' '}
