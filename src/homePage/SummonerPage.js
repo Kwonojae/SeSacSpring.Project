@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from 'react-router-dom';
 import { getUserInfo } from "../api/apiManager";
 
@@ -23,9 +23,11 @@ const SummonerPage = () => {
         });
     }, []); // 빈 배열 객체 두번째 인자로 줘서 useEffect를 무한루프 시키는 것을 방지
 
+    // render 하는 중 NotValid(div)가 먼저 로드 되서 해당 텍스트가 보이는 것을 방지 하기 위한 load 체크용
+    const isLoading = summoner == null;
+
     return (
         <Container>
-            {/* {   3항 연산자로 조건부 렌더링 */}
             <HeaderBox>
                 {
                     summoner.name !== " "
@@ -36,14 +38,18 @@ const SummonerPage = () => {
                                 <SummonerLevel>{summoner.summonerLevel}</SummonerLevel>
                             </SummonerName>
                         </SummonerInfo>
-                        :
-                        <SummonerInfo>
-                            <NotValid>해당하는 소환사명을 가진 사용자가 존재하지 않습니다. 오타를 확인 후 다시 검색 해주세요.</NotValid>
-                        </SummonerInfo>
+                        : (
+                            summoner.name !== " " && isLoading !== null
+                                ?
+                                <SummonerInfo>
+                                    <NotValid>해당하는 소환사명을 가진 사용자는 존재하지 않습니다. 오타를 확인 후 다시 검색 해주세요.</NotValid>
+                                </SummonerInfo>
+                                : null
+                        )
                 }
             </HeaderBox>
             <UserMatchHistory>
-                
+                {/* TODO 용운 파트 */}
             </UserMatchHistory>
         </Container>
     )

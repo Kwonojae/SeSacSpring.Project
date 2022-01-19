@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { IoMdSearch } from "react-icons/io";
 import { getMatchData, getSummonerData } from "../utility/getData";
-import { getUserInfo } from "../api/apiManager";
+import { getSummonerTier, getUserInfo } from "../api/apiManager";
 
 const HomePage = () => {
 
@@ -19,6 +19,7 @@ const HomePage = () => {
         // matchData 불러오기 
         // getMatchData(username);
         // getSummonerData(username);
+        // console.log(getSummonerTier("xxrcCQATxDOHwE2NVfcXuAWq6UEjB0cd_fUQg9eC7CtMgSk"));
 
     };
 

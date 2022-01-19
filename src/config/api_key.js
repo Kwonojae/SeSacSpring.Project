@@ -1,3 +1,3 @@
-export const api_key = 'RGAPI-8702cc5c-dc2e-4f3b-a6c1-7e2d0730feb8'
+export const api_key = 'RGAPI-d14c6401-e322-4396-98f7-6bdd06313d6f'
 
 // 하루마다 갱신 필요
