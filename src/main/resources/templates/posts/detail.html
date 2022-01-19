@@ -9,7 +9,7 @@
 
 <p th:inline="text">작성일 [[${#temporals.format(postsDto.createdDate, 'yyyy-MM-dd HH:mm')}]]</p>
 <!--TODO 나중에 고쳐야함-->
-<p th:inline="text">조회수 </p>
+<p th:inline="text">조회수 [[${postsDto.view}]] </p>
 <p th:text="${postsDto.content}"></p>
 
 <!-- 수정/삭제 -->
@@ -17,7 +17,6 @@
     <a th:href="@{'/post/edit/' + ${postsDto.id}}">
         <button>수정</button>
     </a>
-
     <form id="delete-form" th:action="@{'/post/' + ${postsDto.id}}" method="post">
         <input type="hidden" name="_method" value="delete"/>
         <button id="delete-btn">삭제</button>

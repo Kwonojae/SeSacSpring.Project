@@ -1,9 +1,15 @@
 package crud.board.domain.posts;
 
 import crud.board.domain.TimeEntity;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 //TODO @Data 나중에 db값 확인
 @Getter
@@ -19,8 +25,9 @@ public class Posts extends TimeEntity {
     private String content;
     @Column(length = 10, nullable = false)
     private String writer;
-    @Column(columnDefinition = "integer default 0", nullable = false)
+    @Column(columnDefinition = "integer default 0")
     private int view;
+
 
     //TODO 나중에 더 추가할 기능
     @Builder // setter
@@ -30,6 +37,5 @@ public class Posts extends TimeEntity {
         this.title = title;
         this.content = content;
         this.view = view;
-
     }
 }

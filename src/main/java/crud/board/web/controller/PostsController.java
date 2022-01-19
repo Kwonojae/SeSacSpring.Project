@@ -23,7 +23,7 @@ public class PostsController {
     @GetMapping("/")
     public String list(Model model,
                        @RequestParam(value = "page", defaultValue = "1")
-                               //@PageableDefault(sort = "id", direction = Sort.Direction.DESC)
+                       //@PageableDefault(sort = "id", direction = Sort.Direction.DESC)
                                Integer pageNum) {
 
         List<PostsDto> postsDtoList = postsService.getPostsList(pageNum);
@@ -46,7 +46,6 @@ public class PostsController {
         return "redirect:/";
     }
 
-    //상세보기 detail.html
     @GetMapping("/post/{no}")
     public String detail(@PathVariable("no") Long id, Model model) {
         PostsDto postsDto = postsService.getPost(id);
@@ -56,7 +55,6 @@ public class PostsController {
         return "posts/detail.html";
     }
 
-    // 수정하기 페이지 update.html
     @GetMapping("/post/edit/{no}")
     public String edit(@PathVariable("no") Long id, Model model) {
         PostsDto postsDto = postsService.getPost(id);
@@ -64,43 +62,22 @@ public class PostsController {
         return "posts/update.html";
     }
 
-    // 수정 ->저장
     @PutMapping("/post/edit/{no}")
     public String update(PostsDto postsDto) {
         postsService.savePost(postsDto);
         return "redirect:/";
     }
 
-    // 삭제
     @DeleteMapping("/post/{no}")
     public String delete(@PathVariable("no") Long id) {
         postsService.deletePost(id);
         return "redirect:/";
     }
-
-    //검색
-    //내용으로도 찾을 수 있게 추후수정
+    //TODO 내용으로도 찾을 수 있게
     @GetMapping("/posts/search")
-    public String search(@RequestParam(value = "keyword") @PageableDefault(sort = "id", direction = Sort.Direction.DESC) String keyword, Model model) {
+    public String search(@RequestParam(value = "keyword") @PageableDefault(sort = "id", direction = Sort.Direction.DESC) String keyword, Model model ) {
         List<PostsDto> postsDtoList = postsService.searchPosts(keyword);
         model.addAttribute("postsList", postsDtoList);
         return "posts/list.html";
     }
-    //like
-    //@PostMapping("/posts/{no}/like")
-
-    // 로그인 페이지
-//    @RequestMapping(value = "/login")
-//    public String loginpage(){
-//
-//        return "login/login.html";
-//    }
-
-    // 회원가입 페이지
-//    @RequestMapping(value = "/join")
-//    public String join(){
-//
-//        return "login/join.html";
-//    }
-
 }
