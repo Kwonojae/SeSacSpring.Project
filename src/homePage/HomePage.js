@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { IoMdSearch } from "react-icons/io";
 import { getMatchData, getSummonerData } from "../utility/getData";
+import { getUserInfo } from "../api/apiManager";
 
 const HomePage = () => {
 
@@ -14,7 +15,7 @@ const HomePage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        // console.log(getUserInfo(username));
         // matchData 불러오기 
         // getMatchData(username);
         // getSummonerData(username);
