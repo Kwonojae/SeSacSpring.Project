@@ -2,7 +2,7 @@ package com.sesac.Search.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,12 +12,9 @@ import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "member")
 public class Member {
-
-    public Member() {
-    }
-
     public Member(String memberId, String memberPwd) {
         this.memberId = memberId;
         this.memberPwd = memberPwd;
@@ -42,8 +39,8 @@ public class Member {
     private String memberEmail;
     private boolean enabled;
 
-    @JsonIgnore//
-    @ManyToMany//양방향 맵핑
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)   //양방향 맵핑  (fetch = FetchType.EAGER):즉시로딩
     @JoinTable(
             name = "member_role",   //조인 테이블 명
             joinColumns = @JoinColumn(name = "member_key"),//현재 엔티티를 참조하는 외래키

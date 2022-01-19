@@ -32,6 +32,7 @@ public class MemberService {
         Role role = new Role();
         role.setRoleKey(1l);
         member.getRoles().add(role);
+
         return memberRepository.save(member);
     }
 }
