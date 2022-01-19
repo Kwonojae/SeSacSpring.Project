@@ -1,8 +1,11 @@
 package com.sesac.Search.config;
 
 
+import com.sesac.Search.config.security.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,35 +17,46 @@ import javax.sql.DataSource;
 @EnableWebSecurity //스프링시큐리티 사용을 위한 어노테이션선언
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private DataSource dataSource;
+    private DataSource dataSource;//application 에 설정된 데이터 정보
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/account/register").permitAll()
-                .anyRequest().authenticated()//인증되어야한다 .
+                    .antMatchers("/","/account/register", "/account/login", "/mainLogin").permitAll()
+                    .anyRequest().authenticated()//인증되어야한다 .
                 .and()
                 .formLogin()
-                .loginPage("/account/login")
-                .permitAll()
+                    .loginPage("/account/login")
+                    .usernameParameter("memberId")
+                    .passwordParameter("memberPwd")
+                    .loginProcessingUrl("/account/process")
+                    .defaultSuccessUrl("/mainLogin")
+                    .failureUrl("/")
+                    .permitAll()
                 .and()
-                .logout()
-                .permitAll();
+                    .logout()
+                    .permitAll();
+
     }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        return new CustomAuthenticationProvider();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery("select memberId, memberPwd, enabled "//인증처리 sql문 작성시 띄어쓰기 주의
-                        + "from member "
-                        + "where memberId = ?")
-                .authoritiesByUsernameQuery("select m.memberId, r.id "
-                        + "from member_role mr inner join member m on mr.member_Key = m.memberKey "
-                        + "inner join role r on mr.role_key = r.id "
-                        + "where m.memberId = ?");
-        //Authroization 권한
-        //Autentication 로그인
+        auth.authenticationProvider(authenticationProvider());
+//        auth.jdbcAuthentication()
+//                .dataSource(dataSource)     //enabled 회원가입된 사용자인지 bit 타입 true false
+//                .usersByUsernameQuery("select memberId, memberPwd, enabled "//인증처리 sql문 작성시 띄어쓰기 주의
+//                        + "from member "
+//                        + "where memberId = ?")
+//                .authoritiesByUsernameQuery("select m.memberId, r.id "
+//                        + "from member_role mr inner join member m on mr.member_Key = m.memberKey "
+//                        + "inner join role r on mr.role_key = r.id "
+//                        + "where m.memberId = ?");
     }
 }
