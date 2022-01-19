@@ -1,47 +1,38 @@
 //package crud.board.domain.comment;
 //
-//import crud.board.domain.posts.Posts;
-//import lombok.AllArgsConstructor;
-//import lombok.Builder;
+//import crud.board.domain.TimeEntity;
 //import lombok.Getter;
 //import lombok.NoArgsConstructor;
+//import org.hibernate.annotations.ColumnDefault;
 //import org.springframework.data.annotation.CreatedDate;
 //import org.springframework.data.annotation.LastModifiedDate;
 //
 //import javax.persistence.*;
 //
-//@Builder
-//@AllArgsConstructor
 //@NoArgsConstructor
 //@Getter
 //@Table(name = "coments")
 //@Entity
-//public class Comment {
+//public class Comment extends TimeEntity {
+//
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "comment_id")
 //    private Long id;
 //
-//    @Column(columnDefinition = "TEXT", nullable = false)
+//    //댓글 내용
 //    private String comment;
-//
-//    @Column(name = "created_date")
+//    //댓글 개수
+//    private int commentCnt;
+//    //
+//    private int commentGroup;
+//    @ColumnDefault("0")
 //    @CreatedDate
-//    private String createdDate;
+//    private int commentSequence;
 //
 //    @Column(name = "modified_date")
 //    @LastModifiedDate
 //    private String modifiedDate;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "posts_id")
-//    private Posts posts;
-//
-//    //TODO 작성자 ???
-////    @ManyToOne
-////    @JoinColumn(name = "user_id")
-////    private User user;
-//
-//
 //
 //
 //}
