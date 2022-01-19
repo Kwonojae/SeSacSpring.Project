@@ -25,7 +25,7 @@ public class Posts extends TimeEntity {
     private String content;
     @Column(length = 10, nullable = false)
     private String writer;
-    @Column(columnDefinition = "integer default 0", nullable = false)
+    @Column(columnDefinition = "integer default 0")
     private int view;
 
 
@@ -37,6 +37,5 @@ public class Posts extends TimeEntity {
         this.title = title;
         this.content = content;
         this.view = view;
-
     }
 }

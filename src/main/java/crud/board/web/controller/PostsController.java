@@ -41,7 +41,7 @@ public class PostsController {
     }
 
     @PostMapping("/post")
-    public String write(PostsDto postsDto) {
+    public String write(@RequestBody PostsDto postsDto) {
         postsService.savePost(postsDto);
         return "redirect:/";
     }
