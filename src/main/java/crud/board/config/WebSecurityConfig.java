@@ -1,3 +1,4 @@
+
 package crud.board.config;
 
 import crud.board.config.security.CustomAuthenticationProvider;
@@ -9,6 +10,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.sql.DataSource;
 
@@ -22,11 +26,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/account/register", "/account/login", "/mainLogin").permitAll()
+                .antMatchers("/", "/account/register", "/account/login", "/mainLogin", "/posts/**", "/api/posts/**").permitAll()
+
+
                 .anyRequest().authenticated()//인증되어야한다 .
                 .and()
+                .cors()
+                .and()
                 .formLogin()
-                .loginPage("/acoount/login")
+                .loginPage("/account/login")
                 .usernameParameter("memberId")
                 .passwordParameter("memberPwd")
                 .loginProcessingUrl("/account/process")
@@ -37,6 +45,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
 
+
+    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**",configuration);
+        return source;
     }
 
     @Bean
