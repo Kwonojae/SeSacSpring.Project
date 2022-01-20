@@ -2,6 +2,7 @@ package crud.board.web.controller;
 
 import crud.board.service.PostsService;
 import crud.board.web.dto.PostsDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller   //Todo
+@Controller
+//@RestController
 public class PostsController {
+    @Autowired
     private PostsService postsService;
 
     //todo
@@ -20,7 +23,7 @@ public class PostsController {
     }
 
     // 루트 list.html
-    @GetMapping("/")
+    @GetMapping("/posts")
     public String list(Model model,
                        @RequestParam(value = "page", defaultValue = "1")
                        //@PageableDefault(sort = "id", direction = Sort.Direction.DESC)
@@ -35,18 +38,18 @@ public class PostsController {
     }
 
     //글쓰기 write.html
-    @GetMapping("/post")
+    @GetMapping("/posts/write")
     public String write() {
         return "posts/write.html";
     }
 
-    @PostMapping("/post")
+    @PostMapping("/posts/write")
     public String write(@RequestBody PostsDto postsDto) {
         postsService.savePost(postsDto);
         return "redirect:/";
     }
 
-    @GetMapping("/post/{no}")
+    @GetMapping("/posts/{no}")
     public String detail(@PathVariable("no") Long id, Model model) {
         PostsDto postsDto = postsService.getPost(id);
         postsService.updateView(id); //view ++);
@@ -55,23 +58,23 @@ public class PostsController {
         return "posts/detail.html";
     }
 
-    @GetMapping("/post/edit/{no}")
+    @GetMapping("/posts/edit/{no}")
     public String edit(@PathVariable("no") Long id, Model model) {
         PostsDto postsDto = postsService.getPost(id);
         model.addAttribute("postsDto", postsDto);
         return "posts/update.html";
     }
 
-    @PutMapping("/post/edit/{no}")
+    @PutMapping("/posts/edit/{no}")
     public String update(PostsDto postsDto) {
         postsService.savePost(postsDto);
-        return "redirect:/";
+        return "redirect:/posts";
     }
 
-    @DeleteMapping("/post/{no}")
+    @DeleteMapping("/posts/{no}")
     public String delete(@PathVariable("no") Long id) {
         postsService.deletePost(id);
-        return "redirect:/";
+        return "redirect:/posts";
     }
     //TODO 내용으로도 찾을 수 있게
     @GetMapping("/posts/search")

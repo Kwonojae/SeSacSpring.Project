@@ -11,7 +11,7 @@
 <div th:insert="common/header.html" id="header"></div>
 
 <div id="wrap">
-    <a th:href="@{/post}">글쓰기</a>
+    <a th:href="@{/posts/write}">글쓰기</a>
 
     <form action="/posts/search" method="GET">
         <div class="search">
@@ -39,7 +39,7 @@
                 <span th:text="${posts.id}"></span>
             </td>
             <td>
-                <a th:href="@{'/post/' + ${posts.id}}">
+                <a th:href="@{'/posts/' + ${posts.id}}">
                     <span  th:text="${posts.title}" ></span>
                 </a>
             </td>
@@ -58,7 +58,7 @@
 
     <div>
     <span th:each="pageNum : ${pageList}" th:inline="text">
-        <a th:href="@{'/?page=' + ${pageNum}}">[[${pageNum}]]</a>
+        <a th:href="@{'/posts/?page=' + ${pageNum}}">[[${pageNum}]]</a>
     </span>
     </div>
 </div>
