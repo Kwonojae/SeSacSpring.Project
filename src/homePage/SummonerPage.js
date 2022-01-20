@@ -1,7 +1,6 @@
 import React, { useState, useEffect, } from "react";
 import { useSearchParams } from 'react-router-dom';
 import { getUserInfo, getMatchHistory, getMatchDetail, getSummonerTier } from "../api/apiManager";
-import ShowMyGame from "./ShowGame";
 
 import UNRANKED from '../img/ranked-emblems/Unranked.png';
 import IRON from '../img/ranked-emblems/Iron.png';
@@ -15,8 +14,6 @@ import GRANDMASTER from '../img/ranked-emblems/Grandmaster.png';
 import CHALLENGER from '../img/ranked-emblems/Challenger.png';
 
 import styled from "styled-components";
-import { IoMdSend } from "react-icons/io";
-import { ThemeProvider } from "styled-components";
 
 const SummonerPage = () => {
 
@@ -92,8 +89,9 @@ const SummonerPage = () => {
     const [summoner, setSummoner] = useState({ name: " ", summonerId: "", summonerLevel: " ", profileIconId: " ", puuid: " " });
     const [soloTierIconPath, setSoloTierIconPath] = useState("");
     const [flexTierIconPath, setFlexTierIconPath] = useState("");
-    // var resultArray = [];
+    const [isClicked, setIsClicked] = useState({ isClickTrue: " " }); // 임시 버튼 클릭시 렌더 되게. 데이터 한번에 못받으면 나가리
     const [list, setList] = useState([]);
+    const [toJson, setToJson] = useState([]);
     // const [toJson, setToJson] = useState([]);
 
     const username = searchParams.get('userName');
@@ -109,7 +107,7 @@ const SummonerPage = () => {
                 setSummoner({ name: value.name, summonerId: value.id, summonerLevel: value.summonerLevel, profileIconId: value.profileIconId, puuid: value.puuid });
             }
         });
-    }, []); // 빈 배열 객체 두번째 인자로 줘서 useEffect를 무한루프 시키는 것을 방지
+    }, [username]); // 빈 배열 객체 두번째 인자로 줘서 useEffect를 무한루프 시키는 것을 방지
 
     useEffect(() => {
         async function setTier() {
@@ -121,66 +119,69 @@ const SummonerPage = () => {
 
     useEffect(() => {
         async function ShowGameHistory() {
-        const matchIdsArray = await getMatchHistory(summoner.puuid);
-        var gamedata = { gameDuration: " ", mapId: " ", player1: " ", player2: " ", player3: " ", player4: " ", player5: " ", player6: " ", player7: " ", player8: " ", player9: " ", player10: " ", };
-        var resultArray = [];
+            const matchIdsArray = await getMatchHistory(summoner.puuid);
+            var gamedata = { gameDuration: " ", mapId: " ", player1: " ", player2: " ", player3: " ", player4: " ", player5: " ", player6: " ", player7: " ", player8: " ", player9: " ", player10: " ", };
+            var resultArray = [];
 
-        // console.log(matchIdsArray)
-        matchIdsArray.forEach(element => {
-            // console.log(getMatchDetail(element));
-            const data = Promise.resolve(getMatchDetail(element));
-            data.then(async(value) => {
-                gamedata.gameDuration = value.gameDuration
-                gamedata.mapId = value.mapId
-                gamedata.player1 = value.participants[0]
-                gamedata.player2 = value.participants[1]
-                gamedata.player3 = value.participants[2]
-                gamedata.player4 = value.participants[3]
-                gamedata.player5 = value.participants[4]
-                gamedata.player6 = value.participants[5]
-                gamedata.player7 = value.participants[6]
-                gamedata.player8 = value.participants[7]
-                gamedata.player9 = value.participants[8]
-                gamedata.player10 = value.participants[9]
+            // console.log(matchIdsArray)
+            matchIdsArray.forEach(element => {
+                // console.log(getMatchDetail(element));
+                const data = Promise.resolve(getMatchDetail(element));
+                data.then(async (value) => {
+                    gamedata.gameDuration = value.gameDuration
+                    gamedata.mapId = value.mapId
+                    gamedata.player1 = value.participants[0]
+                    gamedata.player2 = value.participants[1]
+                    gamedata.player3 = value.participants[2]
+                    gamedata.player4 = value.participants[3]
+                    gamedata.player5 = value.participants[4]
+                    gamedata.player6 = value.participants[5]
+                    gamedata.player7 = value.participants[6]
+                    gamedata.player8 = value.participants[7]
+                    gamedata.player9 = value.participants[8]
+                    gamedata.player10 = value.participants[9]
 
-                for (var i = 0; i < 10; i++) {
-                    var mine = {};
-                    if (summoner.summonerId === value.participants[i].summonerId) {
-                        mine.gameDuration = value.gameDuration
-                        mine.mapId = value.mapId
-                        mine.kills = value.participants[i].kills
-                        mine.deaths = value.participants[i].deaths
-                        mine.assists = value.participants[i].assists
-                        mine.win = value.participants[i].win
-                        mine.championName = value.participants[i].championName
-                        mine.summonerName = value.participants[i].summonerName
-                        mine.item0 = value.participants[i].item0
-                        mine.item1 = value.participants[i].item1
-                        mine.item2 = value.participants[i].item2
-                        mine.item3 = value.participants[i].item3
-                        mine.item4 = value.participants[i].item4
-                        mine.item5 = value.participants[i].item5
-                        mine.item6 = value.participants[i].item6
-                        mine.totalMinionsKilled = value.participants[i].totalMinionsKilled
-                        mine.summoner1Id = value.participants[i].summoner1Id
-                        mine.summoner2Id = value.participants[i].summoner2Id
+                    for (var i = 0; i < 10; i++) {
+                        var mine = {};
+                        if (summoner.summonerId === value.participants[i].summonerId) {
+                            mine.gameDuration = value.gameDuration
+                            mine.mapId = value.mapId
+                            mine.kills = value.participants[i].kills
+                            mine.deaths = value.participants[i].deaths
+                            mine.assists = value.participants[i].assists
+                            mine.win = value.participants[i].win
+                            mine.championName = value.participants[i].championName
+                            mine.summonerName = value.participants[i].summonerName
+                            mine.item0 = value.participants[i].item0
+                            mine.item1 = value.participants[i].item1
+                            mine.item2 = value.participants[i].item2
+                            mine.item3 = value.participants[i].item3
+                            mine.item4 = value.participants[i].item4
+                            mine.item5 = value.participants[i].item5
+                            mine.item6 = value.participants[i].item6
+                            mine.totalMinionsKilled = value.participants[i].totalMinionsKilled
+                            mine.summoner1Id = value.participants[i].summoner1Id
+                            mine.summoner2Id = value.participants[i].summoner2Id
 
-                        // var result = JSON.stringify(mine)
-                        // datas.push(result)
-                        // var result = Object.values(mine)
-                        resultArray.push(mine)
+                            resultArray.push(mine)
+                        }
                     }
-                }
-            })
-        });
-        setList(resultArray)
-        } ShowGameHistory();
+                })
+            });
+            setList(resultArray)
+        }
+        ShowGameHistory();
     }, [summoner.puuid, summoner.summonerId])
 
     // 버튼을 눌렀을 떄 전적 갱신되게 만들기
     const onClick = async () => {
-        const toJson = JSON.stringify(list)
-        console.log(toJson)
+
+        // toJson = JSON.stringify(list)
+        setToJson(JSON.stringify(list))
+        // console.log(toJson)
+        if(toJson.length > 0 && toJson !== null){
+            setIsClicked({ isClickTrue: "true" });
+        }
     }
     // render 하는 중 NotValid(div)가 먼저 로드 되서 해당 텍스트가 보이는 것을 방지 하기 위한 load 체크용
     const isLoading = soloTierIconPath == null;
@@ -220,11 +221,39 @@ const SummonerPage = () => {
                 }
             </HeaderBox>
             <UserMatchHistory>
-                    {/* {
-                        ok !== " "
-                        ? <ShowGame>데이터 왓성</ShowGame>
-                        : null
-                    } */}
+                {
+                    isClicked.isClickTrue !== " "
+                        ? <ShowGame>
+                            
+                            {JSON.parse(toJson).map((data) => (
+                                <div>
+                                    <div>
+                                        <table>
+                                            <thead>
+                                                <tr key={data.summonerName}>
+                                                    <th>맵</th>
+                                                    <th>게임시간</th>
+                                                    <th>소환사명</th>
+                                                    <th>캐릭터명</th>
+                                                    <th>승패</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{data.mapId}</td>
+                                                    <td>{data.gameDuration}</td>
+                                                    <td>{data.summonerName}</td>
+                                                    <td>{data.championName}</td>
+                                                    <td>{data.win}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            ))}
+                        </ShowGame>
+                        : <p>아직이여</p>
+                }
             </UserMatchHistory>
         </Container>
     )
@@ -348,5 +377,5 @@ user-select: none;
 `
 
 const UserMatchHistory = styled.div`
-height: 2000px;
+
 `
