@@ -1,22 +1,21 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-
 function RegisterPage() {
-    const [register, setRegister] = useState({userId: " ", nickName: " ", email: " ", password: " "});
+    const [register, setRegister] = useState({title: " ", writer: " ", content: " ",});
 
     useEffect(() => {
-        axios.get('http://localhost:8080/members/register').then((res) => {
+        axios.get('http://localhost:8080/post').then((res) => {
             setRegister(res.data);
+            console.log(res.data);
         });
     }, []);
 
     const postRegister = () => {
-        axios.post('http://localhost:8080/members/register', {
-            email: register.email,
-            userId: register.userId,
-            password: register.password,
-            nickName: register.nickName,
+        axios.post('http://localhost:8080/post', {
+            title: register.title,
+            writer: register.writer,
+            content: register.content,
           })
           .then((res) => {
             console.log('정상적으로 등록했습니다.');
@@ -26,37 +25,31 @@ function RegisterPage() {
     return (
         <>
             <div>
-                Email:{' '}
+                제목:{' '}
                 <input
-                    value={register.email|| ''}
+                    value={register.title|| ''}
                     onChange={(e) => {
-                        setRegister({ ...register, email: e.target.value });
+                        setRegister({ ...register, title: e.target.value });
                     }}
                 />
                 <br />
-                ID:{' '}
+                이름:{' '}
                 <input
-                    value={register.userId|| ''}
+                    value={register.writer|| ''}
                     onChange={(e) => {
-                        setRegister({ ...register, userId: e.target.value });
+                        setRegister({ ...register, writer: e.target.value });
                     }}
                 />
-                PW:{' '}
+                <br />
+                내용:{' '}
                 <input
-                    value={register.password|| ''}
+                    value={register.content|| ''}
                     onChange={(e) => {
-                        setRegister({ ...register, password: e.target.value });
-                    }}
-                />
-                Nickname:{' '}
-                <input
-                    value={register.nickName|| ''}
-                    onChange={(e) => {
-                        setRegister({ ...register, nickName: e.target.value });
+                        setRegister({ ...register, content: e.target.value });
                     }}
                 />
             </div>
-            <button onClick={postRegister}>회원가입</button>
+            <button onClick={postRegister}>게시글 작성</button>
         </>
     )
 }

@@ -6,6 +6,8 @@ import HomePage from './homePage/HomePage';
 import Footer from './footer/Footer';
 import SummonerPage from './homePage/SummonerPage';
 import RegisterPage from './homePage/RegisterPage';
+import PostsPage from './homePage/PostPage';
+import Average from './homePage/Average';
 
 function App() {
   return (
@@ -15,6 +17,9 @@ function App() {
         <Route path="/" exact={true} element={<HomePage />} />
         <Route path="/summoner/" element={<SummonerPage />} />
         <Route path="/register/" element={<RegisterPage />} />
+        <Route path="/post/" element={<PostsPage />} />
+        <Route path="/av/" element={<Average />} />
+
       </Routes>
       <Footer></Footer>
     </BrowserRouter>

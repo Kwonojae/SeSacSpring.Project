@@ -1,6 +1,6 @@
 import {
   getMatchHistory,
-  getMatchHistoryDetail,
+  getMatchDetail,
   getUserInfo,
 } from "../api/apiManager";
 
@@ -29,15 +29,16 @@ export async function getMatchData(username) {
 
   // matchId 통해서 게임 기록 정보 가져오기
   matchIdsArray.forEach((matchId)=>{
-    const data = Promise.resolve(getMatchHistoryDetail(matchId));
+    const data = Promise.resolve(getMatchDetail(matchId));
     data.then((value)=>{
       matchHistoryDetails.push(value);
     })
   });
 
-  console.log(matchHistoryDetails);
+  return matchHistoryDetails;
 }
 
-export function getAll(matchHistoryDetails, forWhat) {
+// 10개 게임 아이
+export async function getMatchDataToOneGame(matchHistory) {
 
 }

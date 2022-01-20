@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { IoMdSearch } from "react-icons/io";
 import { getMatchData, getSummonerData } from "../utility/getData";
-import { getSummonerTier, getUserInfo } from "../api/apiManager";
+import { getMatchDetail, getSummonerTier, getUserInfo, getMatchHistory } from "../api/apiManager";
 
 const HomePage = () => {
 
@@ -15,11 +15,14 @@ const HomePage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // console.log(getMatchHistoryDetail())
         // console.log(getUserInfo(username));
+        // console.log(getMatchDetail("KR_5661918273"))
+        // console.log(getMatchHistory("1ADaNT2BunDYZQ4MFfehi-mkbBbckLnLCpSU2B5rfQOMc9_c9xS3liUGcfdYIGHirJtG0hgrvKzwxA"))
         // matchData 불러오기 
         // getMatchData(username);
         // getSummonerData(username);
-        // console.log(getSummonerTier("xxrcCQATxDOHwE2NVfcXuAWq6UEjB0cd_fUQg9eC7CtMgSk"));
+        // console.log(getSummonerTier("J-DKQ4fDmGlPAtnNfT3rGAm-4L-2I5HNDNqTySubQL_rMaA"));
 
     };
 
