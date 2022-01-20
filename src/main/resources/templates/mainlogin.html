@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title th:text="${title}">로그인 회원가입</title>
+</head>
+<body>
+    <div>
+        <!--인증되면 안보임 -->
+        <a  th:href="@{/account/login}"
+           sec:authorize="!isAuthenticated()">로그인</a>
+        <a  th:href="@{/account/register}"
+           sec:authorize="!isAuthenticated()">회원가입</a>
+        <form  th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
+            <p sec:authentication="name">사용자</p>
+            <p sec:authentication="principal.memberNickname">principal</p>
+            <p sec:authentication="authorities">권한</p>
+            나 로그인 됐음
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</body>
+</html>

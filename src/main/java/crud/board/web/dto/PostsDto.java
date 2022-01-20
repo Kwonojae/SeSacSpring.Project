@@ -21,8 +21,6 @@ public class PostsDto {
     private LocalDateTime modifiedDate;
 
 
-
-
     public Posts toEntity(){
         Posts posts = Posts.builder()
                 .id(id)
