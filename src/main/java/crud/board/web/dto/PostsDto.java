@@ -21,6 +21,8 @@ public class PostsDto {
     private LocalDateTime modifiedDate;
 
 
+
+
     public Posts toEntity(){
         Posts posts = Posts.builder()
                 .id(id)
@@ -40,6 +42,7 @@ public class PostsDto {
         this.view = view;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
+
     }
 
 }

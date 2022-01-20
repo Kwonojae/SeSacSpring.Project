@@ -3,13 +3,9 @@ package crud.board.web.controller;
 import crud.board.service.PostsService;
 import crud.board.web.dto.PostsDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -32,7 +28,18 @@ public class PostsApiController {
 
         return postsService.getPostsList(pageNum);
   }
-
-
+//
+//    @GetMapping("/posts/{no}")
+//    public PostsDto detail(@PathVariable("no") Long id) {
+//
+//        return postsService.getPost(id);
+//    }
+//
+//    @PostMapping("/posts/write")
+//    public Long write(@RequestBody PostsDto postsDto) {
+//
+//        return postsService.savePost(postsDto);
+//    }
+//
 
 }
