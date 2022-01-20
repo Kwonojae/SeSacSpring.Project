@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()//인증되어야한다 .
                 .and()
                 .formLogin()
-                    .loginPage("/account/login")
+                    .loginPage("/login")
                     .usernameParameter("memberId")
                     .passwordParameter("memberPwd")
                     .loginProcessingUrl("/account/process")
